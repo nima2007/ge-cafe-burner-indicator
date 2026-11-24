@@ -1,0 +1,100 @@
+# GE Café range burner indicator — ESPHome firmware
+#
+# Reads cooktop status ERD 0x5522 from the range's GEA3 bus (via the RJ45
+# service port) and lights a NeoPixel strip red while any burner is on.
+# No Wi-Fi, no cloud, no network: the ESP32 runs standalone, powered from
+# the service port's own 5 V rail.
+#
+# Requires the esphome-gea external component:
+#   https://github.com/mguaylam/esphome-gea
+# Clone it next to this file and adjust the path below, then:
+#   esphome run stove-indicator.yaml
+#
+# Wiring (see README.md for the full pinout and safety notes):
+#   ESP32 GPIO22 -> 74HCT245 A2 -> 74HCT245 B2 -> breakout pin 5 (range RX)
+#   Breakout pin 4 (range TX) -> 1k resistor -> ESP32 GPIO23
+#   Breakout pin 8 -> ESP32 GND
+#   Breakout pin 3 (+5 V rail) -> ESP32 5V pin (standalone power)
+#   ESP32 GPIO25 -> NeoPixel DIN
+
+esphome:
+  name: gea3-range-indicator
+
+esp32:
+  board: esp32dev
+  framework:
+    type: esp-idf
+
+external_components:
+  - source:
+      type: local
+      path: /home/pi/esphome-gea/components
+    components: [gea]
+
+logger:
+  level: DEBUG
+  baud_rate: 921600
+
+uart:
+  id: uart_gea
+  tx_pin: GPIO22
+  rx_pin: GPIO23
+  baud_rate: 230400
+
+gea:
+  id: gea_hub
+  uart_id: uart_gea
+  erd_lookup: true
+
+light:
+  - platform: esp32_rmt_led_strip
+    id: burner_light
+    name: "Burner Light"
+    pin: GPIO25
+    # Only the first 12 LEDs of the strip are ever driven. 95 LEDs at full
+    # white would draw ~5.7 A; 12 red LEDs at 60% draw ~150 mA, which is
+    # safe for the service port rail and Dupont wiring.
+    num_leds: 12
+    chipset: WS2812
+    rgb_order: GRB
+    restore_mode: ALWAYS_OFF
+
+binary_sensor:
+  - platform: gea
+    gea_id: gea_hub
+    id: burner_on
+    name: "Burner On"
+    # COOKTOP_STATUS_EXT. Byte 0 is 0x00 with all burners off and becomes
+    # non-zero when a burner lights (0x01 observed for the front right
+    # burner). Whether it is a bitmap, a count, or an any-on flag is not
+    # yet fully decoded; non-zero == "something is on" is proven.
+    erd: 0x5522
+    byte_offset: 0
+    bitmask: 0xFF
+    on_press:
+      - light.turn_on:
+          id: burner_light
+          red: 100%
+          green: 0%
+          blue: 0%
+          brightness: 60%
+    on_release:
+      - light.turn_off: burner_light
+
+# Belt and braces: re-assert the LED state every 5 s so the light always
+# matches the burner state even if a change notification is ever missed.
+interval:
+  - interval: 5s
+    then:
+      - if:
+          condition:
+            binary_sensor.is_on: burner_on
+          then:
+            - light.turn_on:
+                id: burner_light
+                red: 100%
+                green: 0%
+                blue: 0%
+                brightness: 60%
+          else:
+            - light.turn_off: burner_light
