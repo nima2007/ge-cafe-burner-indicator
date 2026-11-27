@@ -53,6 +53,8 @@ Cross-checks against GE's own design: GE publishes the schematic of its official
 
 ## Wiring
 
+![Wiring diagram](docs/wiring-diagram.svg)
+
 74HCT245 straddling the breadboard groove, notch up:
 
 - Chip pin 20 (VCC) → 5 V node; pin 10 (GND) → ground; pin 1 (DIR) → 5 V (A→B); pin 19 (OE) → ground.

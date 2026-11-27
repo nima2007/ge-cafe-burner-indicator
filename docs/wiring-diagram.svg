@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 520" font-family="'Optimistic AI VF', system-ui, sans-serif">
+  <rect x="0" y="0" width="760" height="520" rx="18" fill="#0f141c"/>
+  <text x="24" y="36" font-size="17" font-weight="700" fill="#e8edf4">STOVE INDICATOR — WIRING</text>
+  <text x="24" y="58" font-size="12.5" fill="#9fb0c3">Standalone: powered from the stove's 5 V rail · USB unplugged (never connect both)</text>
+
+  <!-- ESP32 block -->
+  <rect x="20" y="76" width="176" height="236" rx="10" fill="#18202e" stroke="#2e3d55"/>
+  <text x="108" y="102" font-size="15" font-weight="700" fill="#e8edf4" text-anchor="middle">ESP32</text>
+  <text x="108" y="119" font-size="11" fill="#9fb0c3" text-anchor="middle">dev board</text>
+  <line x1="196" y1="138" x2="210" y2="138" stroke="#ff6b5e" stroke-width="2.5"/><circle cx="212" cy="138" r="4" fill="#ff6b5e"/>
+  <text x="186" y="142" font-size="12.5" fill="#e8edf4" text-anchor="end">5V</text>
+  <line x1="196" y1="176" x2="208" y2="176" stroke="#57a8ff" stroke-width="2.5"/>
+  <text x="186" y="180" font-size="12.5" fill="#e8edf4" text-anchor="end">GPIO22 TX</text>
+  <line x1="196" y1="214" x2="208" y2="214" stroke="#ffb454" stroke-width="2.5"/>
+  <text x="186" y="218" font-size="12.5" fill="#e8edf4" text-anchor="end">GPIO23 RX</text>
+  <line x1="196" y1="252" x2="210" y2="252" stroke="#8a93a3" stroke-width="2.5"/><circle cx="212" cy="252" r="4" fill="#8a93a3"/>
+  <text x="186" y="256" font-size="12.5" fill="#e8edf4" text-anchor="end">GND</text>
+  <text x="108" y="292" font-size="11" fill="#9fb0c3" text-anchor="middle">GPIO25 ↓ NeoPixel data</text>
+  <line x1="108" y1="312" x2="108" y2="328" stroke="#c792ea" stroke-width="2.5"/>
+
+  <!-- 74HCT245 block -->
+  <rect x="300" y="96" width="180" height="150" rx="10" fill="#18202e" stroke="#2e3d55"/>
+  <path d="M 378 96 A 12 8 0 0 0 402 96" fill="none" stroke="#2e3d55" stroke-width="2"/>
+  <text x="390" y="126" font-size="13.5" font-weight="700" fill="#e8edf4" text-anchor="middle">SN74HCT245N</text>
+  <text x="390" y="142" font-size="10" fill="#9fb0c3" text-anchor="middle">notch up</text>
+  <line x1="288" y1="160" x2="300" y2="160" stroke="#ff6b5e" stroke-width="2.5"/><circle cx="286" cy="160" r="4" fill="#ff6b5e"/>
+  <text x="312" y="164" font-size="11.5" fill="#e8edf4">1 · DIR → +5V</text>
+  <line x1="288" y1="196" x2="300" y2="196" stroke="#57a8ff" stroke-width="2.5"/>
+  <text x="312" y="200" font-size="11.5" fill="#e8edf4">3 · A2</text>
+  <line x1="480" y1="160" x2="494" y2="160" stroke="#ff6b5e" stroke-width="2.5"/><circle cx="496" cy="160" r="4" fill="#ff6b5e"/>
+  <text x="468" y="164" font-size="11.5" fill="#e8edf4" text-anchor="end">20 · VCC</text>
+  <line x1="480" y1="196" x2="492" y2="196" stroke="#4ade80" stroke-width="2.5"/>
+  <text x="468" y="200" font-size="11.5" fill="#e8edf4" text-anchor="end">17 · B2</text>
+  <line x1="480" y1="228" x2="494" y2="228" stroke="#8a93a3" stroke-width="2.5"/><circle cx="496" cy="228" r="4" fill="#8a93a3"/>
+  <text x="468" y="232" font-size="11.5" fill="#e8edf4" text-anchor="end">19 · OE → GND</text>
+  <line x1="336" y1="246" x2="336" y2="260" stroke="#8a93a3" stroke-width="2.5"/><circle cx="336" cy="262" r="4" fill="#8a93a3"/>
+  <text x="348" y="266" font-size="11.5" fill="#e8edf4">10 · GND</text>
+
+  <!-- Breakout block -->
+  <rect x="596" y="76" width="144" height="236" rx="10" fill="#18202e" stroke="#2e3d55"/>
+  <text x="668" y="102" font-size="12.5" font-weight="700" fill="#e8edf4" text-anchor="middle">RJ45 BREAKOUT</text>
+  <text x="668" y="119" font-size="10" fill="#9fb0c3" text-anchor="middle">range service port</text>
+  <line x1="582" y1="146" x2="596" y2="146" stroke="#ff6b5e" stroke-width="2.5"/><circle cx="580" cy="146" r="4" fill="#ff6b5e"/>
+  <text x="608" y="150" font-size="12.5" fill="#e8edf4">3 · +5V rail</text>
+  <line x1="584" y1="196" x2="596" y2="196" stroke="#ffb454" stroke-width="2.5"/>
+  <text x="608" y="200" font-size="12.5" fill="#e8edf4">4 · TX out</text>
+  <line x1="584" y1="246" x2="596" y2="246" stroke="#4ade80" stroke-width="2.5"/>
+  <text x="608" y="250" font-size="12.5" fill="#e8edf4">5 · RX in</text>
+  <line x1="582" y1="286" x2="596" y2="286" stroke="#8a93a3" stroke-width="2.5"/><circle cx="580" cy="286" r="4" fill="#8a93a3"/>
+  <text x="608" y="290" font-size="12.5" fill="#e8edf4">8 · GND</text>
+
+  <!-- Signal wires -->
+  <path d="M208 176 H252 V196 H288" fill="none" stroke="#57a8ff" stroke-width="2.5"/>
+  <circle cx="252" cy="162" r="9" fill="#57a8ff"/><text x="252" y="166" font-size="11" font-weight="700" fill="#0f141c" text-anchor="middle">1</text>
+  <path d="M492 196 H548 V246 H584" fill="none" stroke="#4ade80" stroke-width="2.5"/>
+  <circle cx="520" cy="188" r="9" fill="#4ade80"/><text x="520" y="192" font-size="11" font-weight="700" fill="#0f141c" text-anchor="middle">2</text>
+  <text x="520" y="266" font-size="10.5" fill="#b7f0cd" text-anchor="middle">plain wire · NO resistor</text>
+  <path d="M584 196 H540 V318 H404" fill="none" stroke="#ffb454" stroke-width="2.5"/>
+  <rect x="356" y="306" width="48" height="24" fill="#241a10" stroke="#ffb454"/>
+  <text x="380" y="322" font-size="11" fill="#ffb454" text-anchor="middle">1 kΩ</text>
+  <path d="M356 318 H236 V214 H208" fill="none" stroke="#ffb454" stroke-width="2.5"/>
+  <circle cx="516" cy="308" r="9" fill="#ffb454"/><text x="516" y="312" font-size="11" font-weight="700" fill="#0f141c" text-anchor="middle">3</text>
+  <text x="380" y="350" font-size="10.5" fill="#ffd9a0" text-anchor="middle">range TX → ESP32 RX · resistor lives on the breadboard</text>
+
+  <!-- NeoPixel strip block -->
+  <rect x="20" y="352" width="176" height="92" rx="10" fill="#18202e" stroke="#2e3d55"/>
+  <text x="108" y="380" font-size="12.5" font-weight="700" fill="#e8edf4" text-anchor="middle">NEOPIXEL STRIP</text>
+  <text x="108" y="397" font-size="10" fill="#9fb0c3" text-anchor="middle">95 LEDs · first 12 used</text>
+  <line x1="108" y1="328" x2="108" y2="352" stroke="#c792ea" stroke-width="2.5"/>
+  <circle cx="90" cy="340" r="8" fill="#c792ea"/><text x="90" y="344" font-size="10" font-weight="700" fill="#0f141c" text-anchor="middle">4</text>
+  <text x="118" y="344" font-size="10" fill="#d9b8f5">DIN</text>
+  <line x1="196" y1="414" x2="210" y2="414" stroke="#ff6b5e" stroke-width="2.5"/><circle cx="212" cy="414" r="4" fill="#ff6b5e"/>
+  <text x="186" y="418" font-size="11.5" fill="#e8edf4" text-anchor="end">5V</text>
+  <line x1="196" y1="432" x2="210" y2="432" stroke="#8a93a3" stroke-width="2.5"/><circle cx="212" cy="432" r="4" fill="#8a93a3"/>
+  <text x="186" y="436" font-size="11.5" fill="#e8edf4" text-anchor="end">GND</text>
+
+  <!-- Legend -->
+  <circle cx="30" cy="466" r="4" fill="#ff6b5e"/>
+  <text x="42" y="470" font-size="11" fill="#c9d4e3">Red dot = the +5V breadboard row — all red dots are the same row. Source: breakout pin 3 (stove rail).</text>
+  <circle cx="30" cy="490" r="4" fill="#8a93a3"/>
+  <text x="42" y="494" font-size="11" fill="#c9d4e3">Gray dot = the GND row — all gray dots are the same row. Source: breakout pin 8. Pins 1, 2, 6, 7: no contacts.</text>
+</svg>
