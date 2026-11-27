@@ -11,8 +11,8 @@
 #   esphome run stove-indicator.yaml
 #
 # Wiring (see README.md for the full pinout and safety notes):
-#   ESP32 GPIO22 -> 74HCT245 A2 -> 74HCT245 B2 -> breakout pin 5 (range RX)
-#   Breakout pin 4 (range TX) -> 1k resistor -> ESP32 GPIO23
+#   ESP32 GPIO27 -> 74HCT245 A2 -> 74HCT245 B2 -> breakout pin 5 (range RX)
+#   Breakout pin 4 (range TX) -> 1k resistor -> ESP32 GPIO14
 #   Breakout pin 8 -> ESP32 GND
 #   Breakout pin 3 (+5 V rail) -> ESP32 5V pin (standalone power)
 #   ESP32 GPIO25 -> NeoPixel DIN
@@ -37,8 +37,8 @@ logger:
 
 uart:
   id: uart_gea
-  tx_pin: GPIO22
-  rx_pin: GPIO23
+  tx_pin: GPIO27
+  rx_pin: GPIO14
   baud_rate: 230400
 
 gea:
@@ -51,10 +51,10 @@ light:
     id: burner_light
     name: "Burner Light"
     pin: GPIO25
-    # Only the first 12 LEDs of the strip are ever driven. 95 LEDs at full
-    # white would draw ~5.7 A; 12 red LEDs at 60% draw ~150 mA, which is
+    # Only the first 14 LEDs of the strip are ever driven. 95 LEDs at full
+    # white would draw ~5.7 A; 14 red LEDs at 60% draw ~170 mA, which is
     # safe for the service port rail and Dupont wiring.
-    num_leds: 12
+    num_leds: 14
     chipset: WS2812
     rgb_order: GRB
     restore_mode: ALWAYS_OFF

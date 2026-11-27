@@ -14,7 +14,7 @@ Status: **working** on the author's CGY366P2TS1 (November 2026). Byte 0 of `0x55
 2. An ESP32 running [ESPHome](https://esphome.io) with the [esphome-gea](https://github.com/mguaylam/esphome-gea) component connects through a 74HCT245 buffer (the range's receive line has a stiff 683 Ω pull-up that a bare 3.3 V GPIO cannot pull low).
 3. On boot the hub sends a subscribe-all and the range dumps every ERD it supports — 33 of them. `0x5522` (`COOKTOP_STATUS_EXT`, 32 bytes) is the cooktop.
 4. A binary sensor watches byte 0 of `0x5522`; a 5-second interval re-asserts the light state so it can never drift from reality.
-5. The strip lights red (first 12 LEDs only, 60% brightness, ~150 mA). The other 83 LEDs of the author's 95-LED strip are never driven — all 95 at full white would draw ~5.7 A, which neither the rail nor Dupont wires should carry.
+5. The strip lights red (first 14 LEDs only, 60% brightness, ~170 mA). The other 81 LEDs of the author's 95-LED strip are never driven — all 95 at full white would draw ~5.7 A, which neither the rail nor Dupont wires should carry.
 
 One protocol fact that shaped the design: **the range never announces state changes on its own.** Its transmit line carries only keepalive frames (four heartbeats on a ~1 s cadence, plus a minutes counter every ~60 s). Lighting a burner changes nothing on the wire until you ask. GEA is request/response — you have to subscribe or read.
 
@@ -58,15 +58,15 @@ Cross-checks against GE's own design: GE publishes the schematic of its official
 74HCT245 straddling the breadboard groove, notch up:
 
 - Chip pin 20 (VCC) → 5 V node; pin 10 (GND) → ground; pin 1 (DIR) → 5 V (A→B); pin 19 (OE) → ground.
-- ESP32 **GPIO22** → chip pin 3 (A2). Chip pin 17 (B2) → **plain jumper, no resistor** → breakout **pin 5** (range RX). A 1 kΩ series resistor here forms a divider against the 683 Ω pull-up and the low level only reaches ~3.1 V — an invalid low. GE's own design uses 51 Ω.
-- Breakout **pin 4** (range TX) → **1 kΩ resistor** → ESP32 **GPIO23**. This resistor stays: it keeps the range's 5 V TX signal from overstressing the 3.3 V input, and this exact path decoded 871 consecutive frames without a framing error during development.
+- ESP32 **GPIO27** → chip pin 3 (A2). Chip pin 17 (B2) → **plain jumper, no resistor** → breakout **pin 5** (range RX). A 1 kΩ series resistor here forms a divider against the 683 Ω pull-up and the low level only reaches ~3.1 V — an invalid low. GE's own design uses 51 Ω.
+- Breakout **pin 4** (range TX) → **1 kΩ resistor** → ESP32 **GPIO14**. This resistor stays: it keeps the range's 5 V TX signal from overstressing the 3.3 V input, and this exact path decoded 871 consecutive frames without a framing error during development.
 - Breakout **pin 8** → ESP32 GND.
 - Breakout **pin 3** (+5 V rail) → ESP32 **5V** pin. This powers everything: ESP32, buffer, and strip share that 5 V node.
 - ESP32 **GPIO25** → strip DIN (data enters at the end the strip's arrows point away from). Strip 5V and GND → the same 5 V node and ground.
 
 **Never connect USB power and the rail wire at the same time.** Two 5 V sources will fight through the board. To reflash or read logs: pull the rail wire first, then plug in USB.
 
-Total draw is roughly 300 mA worst case (ESP32 ~150 mA, buffer negligible, 12 red LEDs at 60% ~150 mA). The rail's exact current limit is unmeasured; it powers GE's own Wi-Fi board and technician adapter by design, and 300 mA has been unremarkable in practice.
+Total draw is roughly 320 mA worst case (ESP32 ~150 mA, buffer negligible, 14 red LEDs at 60% ~170 mA). The rail's exact current limit is unmeasured; it powers GE's own Wi-Fi board and technician adapter by design, and 300 mA has been unremarkable in practice.
 
 ## Firmware
 
